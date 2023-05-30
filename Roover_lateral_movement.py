@@ -118,18 +118,18 @@ if carte_branche:
         exit()
 
 rover.calibrage()
-while True:
-    methodes = list(rover.methodes.keys())
-    print("\n\nVoici les déplacements que vous pouvez faire :")
-    for methode in methodes:
-        print(f' - {methode}')
-    choix = input("\nQuel déplacement voulez-vous faire ?\n   > ")
-    if choix in rover.methodes:
-        try:
+try:
+    while True:
+        methodes = list(rover.methodes.keys())
+        print("\n\nVoici les déplacements que vous pouvez faire :")
+        for methode in methodes:
+            print(f' - {methode}')
+        choix = input("\nQuel déplacement voulez-vous faire ?\n   > ")
+        if choix in rover.methodes:
             rover.methodes[choix]()
-        except KeyboardInterrupt:
-            rover.stop()
-            exit()
-    else:
-        print("Méthode inconnue. Veuillez choisir une méthode valide.")
+        else:
+            print("Méthode inconnue. Veuillez choisir une méthode valide.")
+except KeyboardInterrupt:
+    rover.stop()
+    exit()
 sleep(1)
