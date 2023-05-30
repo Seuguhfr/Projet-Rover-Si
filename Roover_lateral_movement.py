@@ -33,9 +33,10 @@ class Rover:
                 moteur.regler_vitesse(vitesse_calibrage)
                 input("Appuyez sur <Entrer> pour stopper la roue")
                 moteur.regler_vitesse(0)
+                difference_temps = actual_time() - ancien_temps
                 if input("Est-ce bien arrêté ?") == "oui":
                     break
-            dutys.append(vitesse_calibrage / (diametre * 5 / (actual_time() - ancien_temps)))
+            dutys.append(vitesse_calibrage / (diametre * 5 / difference_temps))
         for index, value in enumerate(dutys):
             print(f'moteur {index} : {value}')
         input()
