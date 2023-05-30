@@ -41,7 +41,6 @@ class Rover:
         input()
 
     def calculer_mouvement(self, angle):
-        """Calcule les deux vecteurs de poussée en fonction de l'angle donné."""
         return cos(radians(45 + angle)), sin(radians(45 + angle))
     
     def stop(self):
@@ -49,7 +48,6 @@ class Rover:
             moteur.regler_vitesse(0)
 
     def deplacer(self, distance, angle, temps):
-        """Déplace le rover en fonction de la distance et de l'angle donnés."""
         sens_moteurs = []
         for index, moteur in enumerate(self.moteurs):
             mouvement = self.calculer_mouvement(angle)[index % 2]
@@ -58,7 +56,6 @@ class Rover:
         self.stop()
     
     def polygone(self, angle_initial, angle_rotation, rayon, temps):
-        """Déplace le rover en forme de polygone en fonction des angles et du temps donnés."""
         cote = 2 * rayon * sin(2 * pi * (pi/angle_rotation))
         for angle in range(angle_initial, angle_initial + 360, angle_rotation):
             self.deplacer(cote, angle, temps * angle_rotation / 360)
@@ -79,7 +76,7 @@ class Rover:
     def losange(self, distance=1, temps=4):
         self.polygone(-45, 90, distance, temps)
 
-    def cercle(self, vitesse=1, temps=4):
+    def cercle(self, vitesse=.1, temps=4):
         for angle in range(360):
             for index, moteur in enumerate(self.moteurs):
                 mouvement = self.calculer_mouvement(angle)[index % 2]
