@@ -24,9 +24,8 @@ class Rover:
     def calibrage(self):
         dutys = []
         vitesse_calibrage = 2**12
-        for index, moteur in enumerate(self.moteurs) :
-            moteur.regler_direction(1)
-            diametre = float(input(f"MOTEUR {index}, quel est le diametre (en m)"))
+        for moteur in self.moteurs:
+            diametre = float(input(f"MOTEUR {moteur.position}, quel est le diametre (en m)"))
             while True:
                 input("Appuyez sur <Entrer> pour lancer la roue (attendez 5 tours)")
                 ancien_temps = actual_time()
@@ -45,13 +44,12 @@ class Rover:
         return cos(radians(45 + angle)), sin(radians(45 + angle))
     
     def stop(self):
-        for index, moteur in enumerate(self.moteurs):
+        for moteur in self.moteurs:
             moteur.regler_vitesse(0)
 
     def deplacer(self, distance, angle, temps):
-        sens_moteurs = []
-        for index, moteur in enumerate(self.moteurs):
-            mouvement = self.calculer_mouvement(angle)[index % 2]
+        for moteur in self.moteurs:
+            mouvement = self.calculer_mouvement(angle)[moteur.position % 2]
             moteur.regler_vitesse(mouvement * distance / temps * moteur.efficacite * moteur.sens)
         sleep(temps)
         self.stop()
@@ -63,8 +61,8 @@ class Rover:
             sleep(.1)
 
     def rotation(self, vitesse=1, direction=1):
-        for index, moteur in enumerate(self.moteurs):
-            moteur.regler_vitesse(vitesse * moteur.efficacite * direction * moteur.sens * -1 if index%3 else 1)
+        for moteur in self.moteurs:
+            moteur.regler_vitesse(vitesse * moteur.efficacite * direction * moteur.sens * -1 if moteur.position%3 else 1)
         sleep(1)
         self.stop()
 
@@ -85,12 +83,12 @@ class Rover:
                 sleep(temps/360)
         self.stop()
             
-
 class Moteur:
-    def __init__(self, pin_vitesse, pin_direction, sens, efficacite):
+    def __init__(self, pin_vitesse, pin_direction, sens, position, efficacite):
         self.vitesse = PWM(Pin(pin_vitesse, mode=Pin.OUT))
         self.direction = Pin(pin_direction, mode=Pin.OUT)
         self.sens = sens
+        self.position = position
         self.efficacite = efficacite
         
     def regler_vitesse(self, vitesse):
@@ -98,10 +96,10 @@ class Moteur:
         self.direction.value(1 if vitesse > 0 else 0)
 
 rover = Rover(
-    Moteur(14, 15, -1, 2**16),
-    Moteur(2, 3, 1, 2**16),
-    Moteur(12, 13, 1, 2**16),
-    Moteur(16, 17, -1, 2**16)
+    Moteur(14, 15, -1, 0, 2**16),
+    Moteur(2, 3, 1, 1, 2**16),
+    Moteur(12, 13, 1, 2, 2**16),
+    Moteur(16, 17, -1, 3, 2**16)
 )
 
 if carte_branche:
@@ -118,7 +116,6 @@ if carte_branche:
         rover.cercle()
         exit()
 
-rover.calibrage()
 try:
     while True:
         methodes = list(rover.methodes.keys())
