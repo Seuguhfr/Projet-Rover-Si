@@ -113,6 +113,8 @@ if carte_branche:
         rover.rotation(direction=1)
         sleep(1)
         rover.rotation(direction=-1)
+        sleep(1)
+        rover.cercle()
         exit()
 
 rover.calibrage()
