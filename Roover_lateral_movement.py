@@ -114,25 +114,6 @@ rover = Rover(
     Moteur(16, 17, -1, 2**16)
 )
 
-
-"""
-dutys = []
-for index, moteur in enumerate(rover.moteurs) :
-    moteur.regler_direction(1)
-    diametre = float(input(f"MOTEUR {index}, quel est le diametre (en m)"))
-    while True:
-        input("Appuyez sur <Entrer> pour lancer la roue (attendez 5 tours)")
-        ancien_temps = actual_time()
-        moteur.regler_vitesse(2**12)
-        input("Appuyez sur <Entrer> pour stopper la roue")
-        moteur.regler_vitesse(0)
-        if input("Est-ce bien arrêté ?") == "oui":
-            break
-    dutys.append(2**12 / (diametre * 5 / (actual_time() - ancien_temps)))
-for index, value in enumerate(dutys):
-    print(f'moteur {index} : {value}')
-input()
-"""
 if carte_branche:
     if not reset_cause():
         sleep(3)
