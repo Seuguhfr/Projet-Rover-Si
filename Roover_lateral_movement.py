@@ -7,14 +7,6 @@ except ModuleNotFoundError:
 from time import sleep, time as actual_time
 from math import sin, cos, radians, pi
 
-# L'efficacité est la vitesse pour que la roue parcours 1m/s
-"""
-def interruption_de_requete():
-    rover.stop()
-
-button_pin = Pin(24, machine.Pin.IN, machine.Pin.PULL_UP)
-button_pin.irq(trigger=machine.Pin.IRQ_FALLING, handler=interruption_de_requete)
-"""
 class Rover:
     def __init__(self, *moteurs):
         self.moteurs = list(moteurs)
@@ -141,4 +133,4 @@ while True:
             exit()
     else:
         print("Méthode inconnue. Veuillez choisir une méthode valide.")
-    sleep(1)
+sleep(1)
