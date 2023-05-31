@@ -116,6 +116,7 @@ if carte_branche:
         rover.cercle()
         exit()
 
+rover.calibrage()
 try:
     while True:
         methodes = list(rover.methodes.keys())
