@@ -36,8 +36,8 @@ class Rover:
                 if input("Est-ce bien arrêté ?") == "oui":
                     break
             dutys.append(vitesse_calibrage / (diametre * 5 / difference_temps))
-        for index, value in enumerate(dutys):
-            print(f'moteur {index} : {value}')
+        for index, duty in enumerate(dutys):
+            print(f'moteur {index} : {duty}')
         input()
 
     def calculer_mouvement(self, angle):
