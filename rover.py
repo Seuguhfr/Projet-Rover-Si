@@ -25,7 +25,11 @@ class Rover:
         dutys = []
         vitesse_calibrage = 2**12
         for moteur in self.moteurs:
-            diametre = float(input(f"MOTEUR {moteur.position}, quel est le diametre (en m)"))
+            diametre = input(f"MOTEUR {moteur.position}, quel est le diametre (en m)")
+            try:
+                diametre = float(diametre)
+            except ValueError:
+                break
             while True:
                 input(f"Appuyez sur <Entrer> pour lancer la roue {moteur.position} (attendez 5 tours)")
                 ancien_temps = actual_time()

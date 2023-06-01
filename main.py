@@ -7,6 +7,8 @@ rover = Rover(
     Moteur(16, 17, -1, 3, 2**16)
 )
 
+rover.calibrage()
+
 if carte_branche:
     if not reset_cause():
         sleep(3)
@@ -21,7 +23,6 @@ if carte_branche:
         rover.cercle()
         exit()
 
-rover.calibrage()
 try:
     while True:
         methodes = list(rover.methodes.keys())
