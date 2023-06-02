@@ -1,13 +1,12 @@
-from rover import *
+from roverr import *
 
 rover = Rover(
-    Moteur(14, 15, -1, 0, 2**16),
-    Moteur(2, 3, 1, 1, 2**16),
-    Moteur(12, 13, 1, 2, 2**16),
-    Moteur(16, 17, -1, 3, 2**16)
+    Moteur(14, 15, -1, 0, 34773.25),
+    Moteur(2, 3, 1, 1, 34773.25),
+    Moteur(12, 13, 1, 2, 23182.17),
+    Moteur(16, 17, -1, 3, 34773.25)
 )
 
-rover.calibrage()
 
 if not reset_cause():
     sleep(3)

@@ -62,7 +62,8 @@ class Rover:
 
     def rotation(self, vitesse: float = 1, direction: int = 1):
         for moteur in self.moteurs:
-            moteur.regler_vitesse(vitesse * moteur.efficacite * direction * moteur.sens * -1 if moteur.position%3 else 1)
+            print(f'Moteur {moteur.position} : {vitesse * moteur.efficacite * direction * moteur.sens * (-1 if moteur.position%3 else 1)}')
+            moteur.regler_vitesse(vitesse * moteur.efficacite * direction * moteur.sens * (-1 if moteur.position%3 else 1))
         sleep(1)
         self.stop()
 
@@ -75,7 +76,7 @@ class Rover:
     def losange(self, distance: float = 1, temps: float = 4):
         self.polygone(-45, 90, distance, temps)
 
-    def cercle(self, vitesse: float = .1, temps: float = 4):
+    def cercle(self, vitesse: float = .5, temps: float = 4):
         for angle in range(360):
             for index, moteur in enumerate(self.moteurs):
                 mouvement: float = self.calculer_mouvement(angle)[index % 2]
