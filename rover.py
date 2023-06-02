@@ -11,11 +11,11 @@ class Rover:
     def __init__(self, *moteurs):
         self.moteurs = list(moteurs)
         self.methodes = {
-            "allez-retour": self.go_and_back,
-            "flip": self.rotation,
-            "carre": self.carre,
-            "losange": self.losange,
-            "cercle": self.cercle
+            'allez-retour': self.go_and_back,
+            'flip': self.rotation,
+            'carre': self.carre,
+            'losange': self.losange,
+            'cercle': self.cercle
         }
 
     def __call__(self):
@@ -25,19 +25,19 @@ class Rover:
         dutys = []
         vitesse_calibrage = 2**12
         for moteur in self.moteurs:
-            diametre = input(f"MOTEUR {moteur.position}, quel est le diametre (en m)")
+            diametre = input(f'MOTEUR {moteur.position}, quel est le diametre (en m)')
             try:
                 diametre = float(diametre)
             except ValueError:
                 break
             while True:
-                input(f"Appuyez sur <Entrer> pour lancer la roue {moteur.position} (attendez 5 tours)")
+                input(f'Appuyez sur <Entrer> pour lancer la roue {moteur.position} (attendez 5 tours)')
                 ancien_temps = actual_time()
                 moteur.regler_vitesse(vitesse_calibrage)
-                input("Appuyez sur <Entrer> pour stopper la roue")
+                input('Appuyez sur <Entrer> pour stopper la roue')
                 moteur.regler_vitesse(0)
                 difference_temps = actual_time() - ancien_temps
-                if input("Est-ce bien arrêté ?") == "oui":
+                if input('Est-ce bien arrêté ?') == 'oui':
                     break
             dutys.append(vitesse_calibrage / (diametre * 5 / difference_temps))
         for index, duty in enumerate(dutys):
