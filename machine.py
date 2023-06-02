@@ -13,3 +13,6 @@ class Pin():
         pass
     
     OUT = 1
+
+def reset_cause():
+    return True

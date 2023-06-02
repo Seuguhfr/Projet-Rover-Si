@@ -9,19 +9,18 @@ rover = Rover(
 
 rover.calibrage()
 
-if carte_branche:
-    if not reset_cause():
-        sleep(3)
-        rover.carre()
-        sleep(1)
-        rover.losange()
-        sleep(1)
-        rover.rotation(direction=1)
-        sleep(1)
-        rover.rotation(direction=-1)
-        sleep(1)
-        rover.cercle()
-        exit()
+if not reset_cause():
+    sleep(3)
+    rover.carre()
+    sleep(1)
+    rover.losange()
+    sleep(1)
+    rover.rotation(direction=1)
+    sleep(1)
+    rover.rotation(direction=-1)
+    sleep(1)
+    rover.cercle()
+    exit()
 
 try:
     while True:
@@ -36,5 +35,5 @@ try:
             print('Méthode inconnue. Veuillez choisir une méthode valide.')
 except KeyboardInterrupt:
     rover.stop()
+    print("Arrêt d'urgence. Fin du programme.")
     exit()
-sleep(1)
