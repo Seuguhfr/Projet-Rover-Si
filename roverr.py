@@ -2,8 +2,9 @@ from machine import Pin, PWM, reset_cause
 from time import sleep, time as actual_time
 from math import sin, cos, radians, pi
 
-class Rover:
+class Rover(list):
     def __init__(self, *moteurs):
+        super().__init__(moteurs)
         self.moteurs = list(moteurs)
         self.methodes = {
             'allez-retour': self.go_and_back,
