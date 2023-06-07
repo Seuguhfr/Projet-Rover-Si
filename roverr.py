@@ -10,7 +10,8 @@ class Rover():
             'flip': self.rotation,
             'carre': self.carre,
             'losange': self.losange,
-            'cercle': self.cercle
+            'cercle': self.cercle,
+            'choisir la fonction': self.fonction
         }
 
     def __call__(self):
@@ -47,17 +48,17 @@ class Rover():
             moteur.regler_vitesse(0)
         print('stop')
 
-    def deplacer(self, distance: float = .1, angle: float = 0, temps: float = 1):
+    def deplacer(self, distance: float = .1, angle: float = 0, vitesse: float = 1):
         for moteur in self.moteurs:
             mouvement: float = self.calculer_mouvement(angle)[moteur.position % 2]
-            moteur.regler_vitesse(mouvement * distance / temps * moteur.efficacite * moteur.sens)
-        sleep(temps)
+            moteur.regler_vitesse(mouvement * vitesse * moteur.efficacite * moteur.sens)
+        sleep(distance / vitesse)
         self.stop()
     
-    def polygone(self, angle_initial: float = 0, angle_rotation: float = 120, rayon: float = .5, temps: float = 4):
+    def polygone(self, angle_initial: float = 0, angle_rotation: float = 120, rayon: float = .5, vitesse: float = 1):
         cote: float = 2 * rayon * sin(2 * pi * (pi/angle_rotation))
         for angle in range(angle_initial, angle_initial + 360, angle_rotation):
-            self.deplacer(cote, angle, temps * angle_rotation / 360)
+            self.deplacer(cote, angle, vitesse)
             sleep(.1)
 
     def rotation(self, vitesse: float = 1, direction: int = 1):
@@ -67,22 +68,26 @@ class Rover():
         sleep(1)
         self.stop()
 
-    def go_and_back(self, distance: float = 1, temps: float = 4):
-        self.polygone(0, 180, distance, temps)
+    def go_and_back(self, distance: float = 1, vitesse: float = 1):
+        self.polygone(0, 180, distance, vitesse)
         
-    def carre(self, distance: float = 1, temps: float = 4):
-        self.polygone(0, 90, distance, temps)
+    def carre(self, distance: float = 1, vitesse: float = 1):
+        self.polygone(0, 90, distance, vitesse)
 
-    def losange(self, distance: float = 1, temps: float = 4):
-        self.polygone(-45, 90, distance, temps)
+    def losange(self, distance: float = 1, vitesse: float = 1):
+        self.polygone(-45, 90, distance, vitesse)
 
-    def cercle(self, vitesse: float = .5, temps: float = 4):
+    def cercle(self, rayon: float = .5, vitesse: float = .5):
         for angle in range(360):
-            for index, moteur in enumerate(self.moteurs):
-                mouvement: float = self.calculer_mouvement(angle)[index % 2]
+            for moteur in self.moteurs:
+                mouvement: float = self.calculer_mouvement(angle)[moteur.position % 2]
                 moteur.regler_vitesse(mouvement * vitesse * moteur.efficacite * moteur.sens)
-                sleep(temps/360)
+            sleep(vitesse/(2*pi*rayon*360))
         self.stop()
+        
+    def fonction(self):
+        fonction = input("Entrez la fonction que vous souhaitez exécuter ainsi que ses paramètres.\n   > ")
+        exec(f'self.{fonction}')
             
 class Moteur:
     def __init__(self, pin_vitesse, pin_direction, sens, position, efficacite):
